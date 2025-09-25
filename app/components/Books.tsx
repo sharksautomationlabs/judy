@@ -1,107 +1,119 @@
+"use client"; // This component is interactive
+
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import useEmblaCarousel from 'embla-carousel-react';
+
+// The book data with three items
+const books = [
+  {
+    title: "An Old Little Lady",
+    author: "By Judith Hobson",
+    cover: "/images/book1.png"
+  },
+  {
+    title: "You are not the only one",
+    author: "By Judith Hobson",
+    cover: "/images/book2.png"
+  },
+  {
+    title: "An Old Little Lady",
+    author: "By Judith Hobson",
+    cover: "/images/book3.png"
+  }
+];
 
 export default function Books() {
-  const books = [
-    {
-      title: "An Old Little Lady",
-      author: "By Judith Hobson",
-      cover: "/images/book1.png"
-    },
-    {
-      title: "You are not the only one",
-      author: "By Judith Hobson",
-      cover: "/images/book2.png"
-    },
-    {
-      title: "An Old Little Lady",
-      author: "By Judith Hobson",
-      cover: "/images/book3.png"
-    }
-  ];
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: false, 
+    align: 'center',
+    containScroll: 'trimSnaps'
+  });
+
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const updateCarouselState = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+    setCanScrollPrev(emblaApi.canScrollPrev());
+    setCanScrollNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    updateCarouselState();
+    emblaApi.on('select', updateCarouselState);
+    emblaApi.on('reInit', updateCarouselState);
+    emblaApi.on('resize', updateCarouselState);
+    return () => {
+      emblaApi.off('select', updateCarouselState);
+      emblaApi.off('reInit', updateCarouselState);
+      emblaApi.off('resize', updateCarouselState);
+    };
+  }, [emblaApi, updateCarouselState]);
+
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   return (
-    <section id="books" className="py-20 bg-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 
-          className="text-4xl md:text-5xl font-bold text-black uppercase mb-16 text-center"
-          style={{ 
-            fontFamily: "'Bebas Neue', 'Oswald', system-ui, sans-serif",
-            fontSize: '48px',
-            fontWeight: 800,
-            textTransform: 'uppercase',
-            color: '#000000',
-            letterSpacing: '-0.02em'
-          }}
-        >
+    <section id="books" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-[#EAEAEA]">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="font-anton text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black uppercase mb-8 sm:mb-12 md:mb-16 text-center px-4">
           ALL BOOKS
         </h2>
-        
-        {/* Carousel Container */}
-        <div className="relative max-w-5xl mx-auto">
-          {/* Navigation Arrows */}
+
+        <div className="relative w-full">
+          <div className="w-full overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {books.map((book, index) => (
+                // CHANGE: Reduced horizontal padding from px-4 to px-2
+                <div 
+                  className="relative flex-[0_0_75%] sm:flex-[0_0_55%] md:flex-[0_0_45%] lg:flex-[0_0_35%] px-1" 
+                  key={index}
+                >
+                  <div className={`transform transition-transform duration-500 ease-out w-full ${index === selectedIndex ? 'scale-100 opacity-100' : 'scale-85 opacity-50'}`}>
+                    <div className="flex flex-col items-center text-center">
+                      <div className="w-48 h-60 sm:w-56 sm:h-70 md:w-64 md:h-80 rounded-md shadow-xl">
+                        <Image
+                          src={book.cover}
+                          alt={`Cover of the book ${book.title}`}
+                          width={256}
+                          height={320}
+                          className="w-full h-full object-cover rounded-md"
+                        />
+                      </div>
+                      <div className={`transition-opacity duration-500 mt-4 sm:mt-6 ${index === selectedIndex ? 'opacity-100' : 'opacity-0'}`}>
+                        <h3 className="font-poppins text-lg sm:text-xl font-bold text-black">
+                          {book.title}
+                        </h3>
+                        <p className="font-poppins text-sm sm:text-base text-gray-600">
+                          {book.author}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <button 
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors duration-200"
-            aria-label="Previous books"
+            onClick={scrollPrev} 
+            disabled={!canScrollPrev}
+            className="absolute top-1/2 left-4 transform -translate-y-1/2 p-2 rounded-full bg-black bg-opacity-40 hover:bg-opacity-60 transition-all z-10 disabled:opacity-20 disabled:cursor-not-allowed"
           >
-            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </button>
           
           <button 
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors duration-200"
-            aria-label="Next books"
+            onClick={scrollNext}
+            disabled={!canScrollNext}
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 p-2 rounded-full bg-black bg-opacity-40 hover:bg-opacity-60 transition-all z-10 disabled:opacity-20 disabled:cursor-not-allowed"
           >
-            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
           </button>
-
-          {/* Books Carousel */}
-          <div className="flex items-center justify-center space-x-8 overflow-hidden">
-            {books.map((book, index) => (
-              <div key={index} className="flex-shrink-0 text-center">
-                {/* Book Cover */}
-                <div className="relative mb-6">
-                  <div className="w-48 h-64 mx-auto shadow-2xl rounded-lg overflow-hidden">
-                    <Image
-                      src={book.cover}
-                      alt={`${book.title} book cover`}
-                      width={192}
-                      height={256}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-                
-                {/* Book Title */}
-                <h3 
-                  className="text-xl font-bold text-black mb-2"
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: '20px',
-                    fontWeight: 700,
-                    color: '#000000'
-                  }}
-                >
-                  {book.title}
-                </h3>
-                
-                {/* Book Author */}
-                <p 
-                  className="text-gray-700"
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: '16px',
-                    fontWeight: 400,
-                    color: '#666666'
-                  }}
-                >
-                  {book.author}
-                </p>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

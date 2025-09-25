@@ -29,6 +29,75 @@ h1, h2, h3 {
   font-weight: bold;
 }
 
+/* Make Anton font appear thinner */
+.font-anton {
+  font-family: var(--font-anton);
+  font-weight: 200;
+  font-stretch: condensed;
+  letter-spacing: 0.05em;
+}
+
+/* Animation classes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out 0.2s both;
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.8s ease-out;
+}
+
+.animate-slide-right {
+  animation: slideRight 0.8s ease-out;
+}
+
 /* Smooth scrolling for navigation */
 html {
   scroll-behavior: smooth;
@@ -138,4 +207,24 @@ nav a:focus {
   outline: 2px solid #000000;
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* Embla Carousel Styles */
+.embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 40%; 
+  min-width: 0;
+  position: relative;
+}
+
+
+@media (max-width: 768px) {
+  .embla__slide {
+    flex: 0 0 80%;
+  }
 }
