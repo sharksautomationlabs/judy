@@ -98,6 +98,77 @@ h1, h2, h3 {
   animation: slideRight 0.8s ease-out;
 }
 
+/* Smooth floating animation */
+@keyframes smoothFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes smoothFloatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes smoothFloatFast {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.animate-float {
+  animation: smoothFloat 3s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: smoothFloatSlow 4s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: smoothFloatFast 2s ease-in-out infinite;
+}
+
+/* Book hinge animations - left hinge, right side moves */
+@keyframes bookHingeLeft {
+  0%, 100% {
+    transform: rotateY(0deg) translateY(0px);
+    transform-origin: left center;
+  }
+  50% {
+    transform: rotateY(15deg) translateY(-15px);
+    transform-origin: left center;
+  }
+}
+
+@keyframes bookHingeRight {
+  0%, 100% {
+    transform: rotateY(0deg) translateY(0px);
+    transform-origin: right center;
+  }
+  50% {
+    transform: rotateY(15deg) translateY(-15px);
+    transform-origin: right center;
+  }
+}
+
+.animate-book-hinge-left {
+  animation: bookHingeLeft 4s ease-in-out infinite;
+}
+
+.animate-book-hinge-right {
+  animation: bookHingeRight 4s ease-in-out infinite;
+}
+
 /* Smooth scrolling for navigation */
 html {
   scroll-behavior: smooth;

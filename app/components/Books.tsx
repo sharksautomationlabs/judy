@@ -75,7 +75,7 @@ export default function Books() {
                 >
                   <div className={`transform transition-transform duration-500 ease-out w-full ${index === selectedIndex ? 'scale-100 opacity-100' : 'scale-85 opacity-50'}`}>
                     <div className="flex flex-col items-center text-center">
-                      <div className="w-48 h-60 sm:w-56 sm:h-70 md:w-64 md:h-80 rounded-md shadow-xl">
+                      <div className="w-48 h-60 sm:w-56 sm:h-70 md:w-64 md:h-80 rounded-md shadow-xl animate-float">
                         <Image
                           src={book.cover}
                           alt={`Cover of the book ${book.title}`}

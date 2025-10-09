@@ -2,30 +2,12 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion'; // Import framer-motion
-import Marquee from 'react-fast-marquee';
 
-export default function About() {
+export default function AboutAbout() {
   return (
     // Section Container: Sets the light gray background and ensures full screen height.
     <section className="bg-[#E6E6E6] w-full min-h-[60vh] sm:min-h-screen overflow-x-hidden pb-8 sm:pb-0 md:pb-24">
       
-      {/* Top Bar: Animated marquee with the author's name continuously scrolling. */}
-      <div className="w-full py-3 sm:py-4 border-y border-gray-300 overflow-hidden">
-        <Marquee
-          speed={50}
-          gradient={false}
-          className="font-poppins text-xs sm:text-sm font-bold uppercase tracking-wider text-black"
-        >
-          <span className="mx-8">JUDITH HOBSON</span>
-          <span className="mx-8">JUDITH HOBSON</span>
-          <span className="mx-8">JUDITH HOBSON</span>
-          <span className="mx-8">JUDITH HOBSON</span>
-          <span className="mx-8">JUDITH HOBSON</span>
-          <span className="mx-8">JUDITH HOBSON</span>
-          <span className="mx-8">JUDITH HOBSON</span>
-          <span className="mx-8">JUDITH HOBSON</span>
-        </Marquee>
-      </div>
 
       {/* Main Content Area */}
       <main className="max-w-screen-xl mx-auto pt-4 pb-2 sm:py-16 md:py-24 lg:pb-8 px-4 sm:px-6 md:px-8">
@@ -44,7 +26,7 @@ export default function About() {
             viewport={{ once: false }}
           >
             <h2 className="font-anton text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black uppercase mb-4 sm:mb-6">
-              ABOUT ME
+              ABOUT THE AUTHOR
             </h2>
             <div className="space-y-6 max-w-xl mx-auto lg:mx-0">
               <p className="font-poppins text-sm sm:text-base text-gray-800 leading-relaxed">
@@ -70,7 +52,7 @@ export default function About() {
             viewport={{ once: false }}
           >
             <Image
-              src="/images/about.png" // Ensure this path is correct
+              src="/images/about.png"
               alt="Portrait of Judith Hobson"
               width={600}
               height={600}
@@ -78,7 +60,6 @@ export default function About() {
             />
           </motion.div>
         </div>
-
       </main>
     </section>
   );

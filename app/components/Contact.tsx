@@ -24,7 +24,7 @@ const SocialIcon = ({ href, icon: Icon }: { href: string; icon: React.ElementTyp
 
 export default function Footer() {
   return (
-    <div className="bg-[#EAEAEA] pt-12"> 
+    <div className="bg-white pt-12 overflow-x-hidden"> 
       <footer className="bg-[#575757] rounded-t-[40px] text-gray-200 font-poppins">
         
         <div className="mx-auto max-w-7xl px-8 py-16 sm:px-12">

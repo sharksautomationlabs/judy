@@ -65,6 +65,13 @@ export default function Navigation() {
                 ALL BOOKS
               </Link>
               <Link 
+                href="/cart" 
+                className="text-sm font-semibold uppercase tracking-[0.12em] text-[#333333] hover:text-black hover:-translate-y-0.5 transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-3"
+                style={{ fontFamily: "'Inter', system-ui" }}
+              >
+                CART
+              </Link>
+              <Link 
                 href="/contact" 
                 className="text-sm font-semibold uppercase tracking-[0.12em] text-[#333333] hover:text-black hover:-translate-y-0.5 transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-3"
                 style={{ fontFamily: "'Inter', system-ui" }}
@@ -123,6 +130,12 @@ export default function Navigation() {
               className="text-base font-semibold uppercase tracking-wider text-black py-2"
             >
               ALL BOOKS
+            </Link>
+            <Link 
+              href="/cart" 
+              className="text-base font-semibold uppercase tracking-wider text-black py-2"
+            >
+              CART
             </Link>
             <Link 
               href="/contact" 
