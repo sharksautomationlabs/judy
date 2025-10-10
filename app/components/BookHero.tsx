@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useCart } from '../contexts/CartContext';
 import { useBookSelection } from '../contexts/BookSelectionContext';
+import BookFormatSelector from './BookFormatSelector';
 
 interface BookHeroProps {
   className?: string;
@@ -29,27 +30,11 @@ const ShoppingCartIcon = () => (
 
 
 export default function BookHero({ className = "" }: BookHeroProps) {
-  const { dispatch } = useCart();
   const { state } = useBookSelection();
   const { selectedBook } = state;
 
-  const handleAddToCart = () => {
-    dispatch({
-      type: 'ADD_ITEM',
-      payload: {
-        id: selectedBook.id,
-        title: selectedBook.title,
-        author: selectedBook.author,
-        price: selectedBook.price,
-        image: selectedBook.heroImage
-      }
-    });
-    // Also open the cart panel
-    dispatch({ type: 'TOGGLE_CART' });
-  };
-
   return (
-    <section className={`bg-gray-50 py-16 sm:py-20 md:py-24 lg:py-28 overflow-x-hidden ${className}`}>
+    <section className={`bg-gray-50 pt-24 pb-16 sm:pt-28 sm:pb-20 md:pt-32 md:pb-24 lg:pt-36 lg:pb-28 overflow-x-hidden ${className}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-12 lg:gap-x-16 items-center">
           
@@ -116,23 +101,11 @@ export default function BookHero({ className = "" }: BookHeroProps) {
              </p>
             
             <p className="font-poppins text-base sm:text-lg text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0 mb-8">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. ed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              {selectedBook.description}
             </p>
 
-            <div className="flex items-center justify-center lg:justify-start gap-4">
-              <div className="bg-white rounded-full px-6 py-3 shadow-md">
-                <p className="font-poppins text-lg font-medium text-[#575757]">
-                  $ {selectedBook.price.toFixed(2)}
-                </p>
-              </div>
-              <button 
-                onClick={handleAddToCart}
-                className="flex items-center bg-[#575757] text-white px-6 py-3 rounded-full shadow-md hover:bg-[#404040] transition-colors duration-300 font-poppins font-medium text-lg"
-              >
-                <ShoppingCartIcon />
-                Add To Cart
-              </button>
-            </div>
+            {/* Format Selector */}
+            <BookFormatSelector />
           </motion.div>
         </div>
       </div>

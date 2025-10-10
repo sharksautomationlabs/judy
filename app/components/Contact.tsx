@@ -1,13 +1,10 @@
 "use client"; // Good practice for components with user interaction (links, forms)
 
 import { 
-  FaInstagram, 
-  FaTwitter, 
-  FaFacebookF, 
-  FaLinkedinIn, 
-  FaPhoneAlt, 
-  FaEnvelope, 
-  FaMapMarkerAlt 
+  FaAmazon,
+  FaBookOpen,
+  FaShoppingCart,
+  FaGoogle
 } from 'react-icons/fa';
 
 // A reusable component for social media icons for cleaner code.
@@ -28,7 +25,7 @@ export default function Footer() {
       <footer className="bg-[#575757] rounded-t-[40px] text-gray-200 font-poppins">
         
         <div className="mx-auto max-w-7xl px-8 py-16 sm:px-12">
-          <div className="grid grid-cols-1 gap-y-12 gap-x-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-y-12 gap-x-8 md:grid-cols-2">
             
             {/* Column 1: Brand & Socials */}
             <div className="space-y-4">
@@ -36,38 +33,17 @@ export default function Footer() {
                 Judith Hobson
               </h3>
               <p className="text-sm leading-relaxed text-gray-300 max-w-xs">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                For the last 3 years, Judith has been talking about suicide and healing people with the same problem. Through her books, she shares powerful stories of recovery, resilience, and hope, helping others find their path to healing and a better tomorrow.
               </p>
               <div className="flex space-x-3 pt-2">
-                <SocialIcon href="#" icon={FaInstagram} />
-                <SocialIcon href="#" icon={FaTwitter} />
-                <SocialIcon href="#" icon={FaFacebookF} />
-                <SocialIcon href="#" icon={FaLinkedinIn} />
+                <SocialIcon href="https://www.amazon.in/Old-Little-Lady-Judith-Hobson/dp/B0FQ2LTH5Y" icon={FaAmazon} />
+                <SocialIcon href="https://www.barnesandnoble.com/w/an-old-little-lady-judith-hobson/1148207673" icon={FaBookOpen} />
+                <SocialIcon href="https://www.booktopia.com.au/an-old-little-lady-judith-hobson/ebook/9798330262595.html" icon={FaShoppingCart} />
+                <SocialIcon href="https://books.google.com.pk/books/about/An_Old_Little_Lady.html?id=_j2R0QEACAAJ&redir_esc=y" icon={FaGoogle} />
               </div>
             </div>
 
-            {/* Column 2: Contact Info */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-bold uppercase tracking-wider text-white">
-                Contact Us:
-              </h4>
-              <ul className="space-y-3 text-sm text-gray-300">
-                <li className="flex items-center gap-3">
-                  <FaPhoneAlt className="h-4 w-4 flex-shrink-0" />
-                  <span>434-738-6339</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <FaEnvelope className="h-4 w-4 flex-shrink-0" />
-                  <span>jh797985@gmail.com</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <FaMapMarkerAlt className="h-5 w-5 flex-shrink-0 mt-0.5" />
-                  <span>261 Friendship Drive Walstonburg NC 27888</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Column 3: Message Form */}
+            {/* Column 2: Message Form */}
             <div className="space-y-4">
               <h4 className="text-sm font-bold uppercase tracking-wider text-white">
                 Leave a Message

@@ -8,17 +8,32 @@ interface BookFeaturesProps {
   className?: string;
 }
 
-const features = [
-  "Written in a compassionate, empathetic tone that makes readers feel understood.",
-  "Provides comfort and encouragement in simple, digestible language.",
-  "Acts as both a mirror (showing readers their own feelings) and a light (guiding them forward).",
-  "Can be read as a personal reflection tool or used in group discussions.",
-  "Leaves readers with a sense of hope, courage, and renewed purpose."
-];
-
 export default function BookFeatures({ className = "" }: BookFeaturesProps) {
   const { state } = useBookSelection();
   const { selectedBook } = state;
+  
+  const getFeatures = (bookId: string) => {
+    if (bookId === 'book1') {
+      return [
+        "Explores themes of healing, recovery, and finding hope after trauma.",
+        "Addresses the challenging topic of abuse and its long-term impact on survivors.",
+        "Shows the importance of counseling and professional support in the healing process.",
+        "Demonstrates resilience and the power of taking life one day at a time.",
+        "Provides comfort to those who have faced similar struggles and feel alone."
+      ];
+    } else if (bookId === 'book2') {
+      return [
+        "Celebrates the joy of new beginnings and life transitions in senior years.",
+        "Explores the beauty of connecting with nature and wildlife in rural settings.",
+        "Shows the importance of making new friends and building community connections.",
+        "Addresses the challenges and surprises of adapting to country living.",
+        "Demonstrates resilience and adaptability at any stage of life."
+      ];
+    }
+    return [];
+  };
+  
+  const features = getFeatures(selectedBook.id);
   
   const books = [0, 1, 2, 3]; // An array to map over for the stack
   const offsetPerBook = 32;    // How many pixels each book is offset to the right
@@ -39,7 +54,7 @@ export default function BookFeatures({ className = "" }: BookFeaturesProps) {
             {/* Left Column: Good Things List */}
             <div>
               <h2 className="font-anton text-5xl sm:text-6xl text-white uppercase font-bold drop-shadow-md mb-8">
-                GOOD THINGS
+                KEY THINGS
               </h2>
               
               <ul className="space-y-5">

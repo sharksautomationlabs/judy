@@ -34,10 +34,7 @@ export default function BookAbout({ className = "" }: BookAboutProps) {
             </h2>
           
             <p className="font-poppins text-lg sm:text-xl text-gray-700 leading-relaxed max-w-2xl mx-auto">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus gravida, nibh a dictum finibus, velit est mattis libero, in sollicitudin augue dui vitae risus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer sed lacus sit amet massa tincidunt imperdiet.
-            </p>
-            <p className="font-poppins text-lg sm:text-xl text-gray-700 leading-relaxed max-w-2xl mx-auto">
-              Curabitur porta, lectus vitae iaculis pretium, sapien mauris faucibus ipsum, sed cursus orci mi eget nulla. Donec at est vel turpis ullamcorper fermentum. Suspendisse potenti. Proin hendrerit feugiat lorem, vel pulvinar lacus tempor vel. Vivamus varius, magna in egestas posuere, lorem lacus sagittis eros, nec laoreet nisi magna et risus.
+              {selectedBook.description}
             </p>
           </div>
         </motion.div>

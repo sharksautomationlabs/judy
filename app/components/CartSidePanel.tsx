@@ -11,11 +11,11 @@ export default function CartSidePanel() {
   const router = useRouter();
   
 
-  const handleQuantityChange = (id: string, newQuantity: number) => {
+  const handleQuantityChange = (formatId: string, newQuantity: number) => {
     if (newQuantity === 0) {
-      dispatch({ type: 'REMOVE_ITEM', payload: id });
+      dispatch({ type: 'REMOVE_ITEM', payload: formatId });
     } else {
-      dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity: newQuantity } });
+      dispatch({ type: 'UPDATE_QUANTITY', payload: { id: formatId, quantity: newQuantity } });
     }
   };
 
@@ -75,7 +75,7 @@ export default function CartSidePanel() {
                 <div className="space-y-4">
                   {state.items.map((item) => (
                     <motion.div
-                      key={item.id}
+                      key={item.formatId}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
@@ -99,6 +99,9 @@ export default function CartSidePanel() {
                         <p className="font-poppins text-xs text-gray-600">
                           by {item.author}
                         </p>
+                        <p className="font-poppins text-xs text-gray-500 capitalize">
+                          {item.format}
+                        </p>
                         <p className="font-poppins text-sm font-bold text-gray-800">
                           ${item.price.toFixed(2)}
                         </p>
@@ -107,7 +110,7 @@ export default function CartSidePanel() {
                       {/* Quantity Controls */}
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                          onClick={() => handleQuantityChange(item.formatId, item.quantity - 1)}
                           className="p-1 hover:bg-gray-200 rounded-full transition-colors"
                         >
                           <FaMinus className="w-3 h-3 text-gray-600" />
@@ -116,7 +119,7 @@ export default function CartSidePanel() {
                           {item.quantity}
                         </span>
                         <button
-                          onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                          onClick={() => handleQuantityChange(item.formatId, item.quantity + 1)}
                           className="p-1 hover:bg-gray-200 rounded-full transition-colors"
                         >
                           <FaPlus className="w-3 h-3 text-gray-600" />

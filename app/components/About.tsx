@@ -48,15 +48,15 @@ export default function About() {
             </h2>
             <div className="space-y-6 max-w-xl mx-auto lg:mx-0">
               <p className="font-poppins text-sm sm:text-base text-gray-800 leading-relaxed">
-                Judith Hobson is a passionate author whose writing journey began with a deep desire to connect with readers through authentic storytelling. With years of experience in literature and a genuine love for the written word, Judith brings unique perspectives to her work.
+                Judith Hobson is a passionate author and advocate whose writing journey began with a deep desire to help people through their darkest times. For the last 3 years, she has been talking about suicide and healing people with the same problem, using her platform to bring hope and understanding to those who need it most.
               </p>
               
               <p className="font-poppins text-sm sm:text-base text-gray-800 leading-relaxed">
-                Her debut work, &ldquo;You Are Not The Only One,&rdquo; reflects her commitment to addressing universal themes that resonate with readers from all walks of life. Judith believes in the power of books to transform lives and create meaningful connections.
+                Her work, including &ldquo;You Are Not The Only One,&rdquo; reflects her commitment to addressing the most challenging aspects of human experience. Through authentic storytelling, Judith creates meaningful connections with readers who have faced abuse, trauma, and life's greatest struggles.
               </p>
               
               <p className="font-poppins text-sm sm:text-base text-gray-800 leading-relaxed">
-                When not writing, Judith enjoys reading, spending time in nature, and connecting with her readers. She is dedicated to creating stories that inspire, comfort, and empower her audience.
+                Judith believes in the power of books to transform lives and provide a path to healing. She is dedicated to creating stories that inspire, comfort, and empower her audience, helping them find strength and hope in their journey forward.
               </p>
             </div>
           </motion.div>

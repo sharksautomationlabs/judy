@@ -9,6 +9,8 @@ interface CartItem {
   price: number;
   image: string;
   quantity: number;
+  format: 'hardcover' | 'paperback' | 'ebook' | 'kindle';
+  formatId: string; // Unique identifier for book + format combination
 }
 
 interface CartState {
@@ -33,11 +35,11 @@ const CartContext = createContext<{
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case 'ADD_ITEM': {
-      const existingItem = state.items.find(item => item.id === action.payload.id);
+      const existingItem = state.items.find(item => item.formatId === action.payload.formatId);
       
       if (existingItem) {
         const updatedItems = state.items.map(item =>
-          item.id === action.payload.id
+          item.formatId === action.payload.formatId
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -60,7 +62,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
     }
     
     case 'REMOVE_ITEM': {
-      const filteredItems = state.items.filter(item => item.id !== action.payload);
+      const filteredItems = state.items.filter(item => item.formatId !== action.payload);
       return {
         ...state,
         items: filteredItems,
@@ -71,7 +73,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
     case 'UPDATE_QUANTITY': {
       const updatedItems = state.items
         .map(item =>
-          item.id === action.payload.id
+          item.formatId === action.payload.id
             ? { ...item, quantity: Math.max(0, action.payload.quantity) }
             : item
         )

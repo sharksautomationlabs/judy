@@ -35,7 +35,7 @@ export default function OrderSummary() {
           </div>
         ) : (
           state.items.map((item) => (
-            <div key={item.id} className="flex items-center space-x-4 p-4 bg-white rounded-lg">
+            <div key={item.formatId} className="flex items-center space-x-4 p-4 bg-white rounded-lg">
               <div className="relative w-16 h-20 animate-float">
                 <Image
                   src={item.image}
@@ -48,6 +48,9 @@ export default function OrderSummary() {
                 <h4 className="font-anton text-lg text-[#535353] uppercase">
                   {item.title}
                 </h4>
+                <p className="font-barlow text-sm text-[#535353] capitalize">
+                  {item.format}
+                </p>
                 <p className="font-barlow text-sm text-[#535353]">
                   QTY: {item.quantity}
                 </p>

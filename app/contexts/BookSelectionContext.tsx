@@ -3,11 +3,17 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 
 // Book data structure
+interface BookFormat {
+  type: 'hardcover' | 'paperback' | 'ebook' | 'kindle';
+  price: number;
+}
+
 interface Book {
   id: string;
   title: string;
   author: string;
-  price: number;
+  description: string;
+  formats: BookFormat[];
   heroImage: string;
   aboutImage: string;
   featuresImage: string;
@@ -20,7 +26,12 @@ const books: Book[] = [
     id: 'book1',
     title: 'You are not the only one',
     author: 'Judith Hobson',
-    price: 19.00,
+    description: 'Sixteen million people are abused every year. For Jean, the abuse started at a very young age. The man she married was very abusive. When he died, she was set free. The road to recovery is long and hard. Jean was counseled every week for over four years. She still goes to counseling periodically and probably always will. As she put in the work, she found the road began to level with far fewer bumps. Jean lives one day at a time. Her goal for each day is to keep it simple.',
+    formats: [
+      { type: 'hardcover', price: 16.99 },
+      { type: 'paperback', price: 13.99 },
+      { type: 'ebook', price: 9.99 }
+    ],
     heroImage: '/images/hero-book.jpg',
     aboutImage: '/images/about-the-book.png',
     featuresImage: '/images/goodthings.png',
@@ -30,7 +41,11 @@ const books: Book[] = [
     id: 'book2',
     title: 'An Old Little Lady',
     author: 'Judith Hobson',
-    price: 24.00,
+    description: 'In her senior years, she decided to move from downtown to the country. It would be much quieter. Right away she started seeing wildlife in her yard. She loved it. Then came the stray cats. She made new friends quickly. One thing she had never thought about living in the country is all the different kinds of bugs. Outside she didn\'t mind, but in her house was a different story.',
+    formats: [
+      { type: 'kindle', price: 9.99 },
+      { type: 'paperback', price: 14.99 }
+    ],
     heroImage: '/images/hero-book2.png',
     aboutImage: '/images/about-the-book2.png',
     featuresImage: '/images/goodthings2.png',
