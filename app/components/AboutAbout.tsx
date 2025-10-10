@@ -34,7 +34,7 @@ export default function AboutAbout() {
               </p>
               
               <p className="font-poppins text-sm sm:text-base text-gray-800 leading-relaxed">
-                Her work, including &ldquo;You Are Not The Only One,&rdquo; reflects her commitment to addressing the most challenging aspects of human experience. Through authentic storytelling, Judith creates meaningful connections with readers who have faced abuse, trauma, and life's greatest struggles.
+                Her work, including &ldquo;You Are Not The Only One,&rdquo; reflects her commitment to addressing the most challenging aspects of human experience. Through authentic storytelling, Judith creates meaningful connections with readers who have faced abuse, trauma, and life&apos;s greatest struggles.
               </p>
               
               <p className="font-poppins text-sm sm:text-base text-gray-800 leading-relaxed">
