@@ -8,14 +8,14 @@ import {
 } from 'react-icons/fa';
 
 // A reusable component for social media icons for cleaner code.
-const SocialIcon = ({ href, icon: Icon }: { href: string; icon: React.ElementType }) => (
+const SocialIcon = ({ href, icon: Icon, bgColor, textColor }: { href: string; icon: React.ElementType; bgColor: string; textColor: string }) => (
   <a 
     href={href} 
     target="_blank" 
     rel="noopener noreferrer" 
-    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#D9D9D9] text-[#575757] transition-opacity hover:opacity-80"
+    className={`flex h-12 w-12 items-center justify-center rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg ${bgColor} ${textColor}`}
   >
-    <Icon className="h-5 w-5" />
+    <Icon className="h-6 w-6" />
   </a>
 );
 
@@ -35,11 +35,31 @@ export default function Footer() {
               <p className="text-sm leading-relaxed text-gray-300 max-w-xs">
                 For the last 3 years, Judith has been talking about suicide and healing people with the same problem. Through her books, she shares powerful stories of recovery, resilience, and hope, helping others find their path to healing and a better tomorrow.
               </p>
-              <div className="flex space-x-3 pt-2">
-                <SocialIcon href="https://www.amazon.in/Old-Little-Lady-Judith-Hobson/dp/B0FQ2LTH5Y" icon={FaAmazon} />
-                <SocialIcon href="https://www.barnesandnoble.com/w/an-old-little-lady-judith-hobson/1148207673" icon={FaBookOpen} />
-                <SocialIcon href="https://www.booktopia.com.au/an-old-little-lady-judith-hobson/ebook/9798330262595.html" icon={FaShoppingCart} />
-                <SocialIcon href="https://books.google.com.pk/books/about/An_Old_Little_Lady.html?id=_j2R0QEACAAJ&redir_esc=y" icon={FaGoogle} />
+              <div className="flex space-x-4 pt-2">
+                <SocialIcon 
+                  href="https://www.amazon.in/Old-Little-Lady-Judith-Hobson/dp/B0FQ2LTH5Y" 
+                  icon={FaAmazon} 
+                  bgColor="bg-gradient-to-br from-orange-400 to-orange-600" 
+                  textColor="text-white" 
+                />
+                <SocialIcon 
+                  href="https://www.barnesandnoble.com/w/an-old-little-lady-judith-hobson/1148207673" 
+                  icon={FaBookOpen} 
+                  bgColor="bg-gradient-to-br from-blue-500 to-blue-700" 
+                  textColor="text-white" 
+                />
+                <SocialIcon 
+                  href="https://www.booktopia.com.au/an-old-little-lady-judith-hobson/ebook/9798330262595.html" 
+                  icon={FaShoppingCart} 
+                  bgColor="bg-gradient-to-br from-green-500 to-green-700" 
+                  textColor="text-white" 
+                />
+                <SocialIcon 
+                  href="https://books.google.com.pk/books/about/An_Old_Little_Lady.html?id=_j2R0QEACAAJ&redir_esc=y" 
+                  icon={FaGoogle} 
+                  bgColor="bg-gradient-to-br from-red-500 to-red-700" 
+                  textColor="text-white" 
+                />
               </div>
             </div>
 
