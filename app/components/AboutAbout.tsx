@@ -36,9 +36,14 @@ export default function AboutAbout() {
               <p className="font-poppins text-sm sm:text-base text-gray-800 leading-relaxed">
                 Her work, including &ldquo;You Are Not The Only One,&rdquo; reflects her commitment to addressing the most challenging aspects of human experience. Through authentic storytelling, Judith creates meaningful connections with readers who have faced abuse, trauma, and life&apos;s greatest struggles.
               </p>
+
               
               <p className="font-poppins text-sm sm:text-base text-gray-800 leading-relaxed">
-                Judith believes in the power of books to transform lives and provide a path to healing. She is dedicated to creating stories that inspire, comfort, and empower her audience, helping them find strength and hope in their journey forward.
+                Judith&apos;s son committed suicide. After much research, she learned they had seen the signs but never understood what was happening. Judith now does presentations titled &ldquo;the TALK SAVES&rdquo;. Her goal is to inform people of the signs in the hope of saving lives.
+              </p>
+              
+              <p className="font-poppins text-sm sm:text-base text-gray-800 leading-relaxed">
+                Living in town has many advantages when you are raising children and working. You are close to all the stores and it&apos;s easy to go to the events in town. But for some, once the kids leave home and they are no longer working, a quieter life might be just the thing. That means moving outside of town. You get to experience a very different life. In most ways it works out well, but there is just one problem........
               </p>
             </div>
           </motion.div>
