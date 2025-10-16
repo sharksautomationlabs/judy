@@ -1,161 +1,145 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useCart } from '../contexts/CartContext';
 import { useCheckout } from '../contexts/CheckoutContext';
-import Link from 'next/link';
+import StripeEmbeddedCheckout from '../components/checkout/StripeEmbeddedCheckout';
+import DeliveryMethodSelector from '../components/checkout/DeliveryMethodSelector';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
-// Import modular components
-import Step1Contact from '../components/checkout/Step1Contact';
-import Step2Delivery from '../components/checkout/Step2Delivery';
-import Step3Billing from '../components/checkout/Step3Billing';
-import Step4Payment from '../components/checkout/Step4Payment';
-import OrderSummary from '../components/checkout/OrderSummary';
-import ProgressIndicator from '../components/checkout/ProgressIndicator';
-
-// Main Checkout Page
 export default function CheckoutPage() {
-  const { state } = useCart();
-  const { dispatch: checkoutDispatch } = useCheckout();
+  const { state: cartState } = useCart();
+  const { state: checkoutState } = useCheckout();
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState(1);
-  const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-  // Hydration check
   useEffect(() => {
-    setIsHydrated(true);
+    setIsClient(true);
   }, []);
 
-  // Redirect if cart is empty (but not if payment was successful)
-  useEffect(() => {
-    if (isHydrated && state.items.length === 0 && !isPaymentSuccess) {
-      router.push('/cart');
-    }
-  }, [state.items.length, router, isPaymentSuccess, isHydrated]);
-
-  const handleNext = () => {
-    if (currentStep < 4) {
-      setCurrentStep(currentStep + 1);
-      checkoutDispatch({
-        type: 'SET_CURRENT_STEP',
-        payload: currentStep + 1
-      });
-    }
+  const handleCheckoutSuccess = () => {
+    // Redirect to success page or show success message
+    router.push('/checkout/return');
   };
 
-  const handleBack = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-      checkoutDispatch({
-        type: 'SET_CURRENT_STEP',
-        payload: currentStep - 1
-      });
-    }
+  const handleCheckoutError = (error: string) => {
+    console.error('Checkout error:', error);
+    // You could show a toast notification here
   };
 
-  const handlePaymentSuccess = () => {
-    setIsPaymentSuccess(true);
-  };
-
-  const renderStep = () => {
-    switch (currentStep) {
-      case 1:
-        return <Step1Contact onNext={handleNext} />;
-      case 2:
-        return <Step2Delivery onNext={handleNext} onBack={handleBack} />;
-      case 3:
-        return <Step3Billing onNext={handleNext} onBack={handleBack} />;
-      case 4:
-        return <Step4Payment onBack={handleBack} onPaymentSuccess={handlePaymentSuccess} />;
-      default:
-        return <Step1Contact onNext={handleNext} />;
-    }
-  };
-
-  if (!isHydrated) {
+  // Show loading state during hydration
+  if (!isClient) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="font-anton text-4xl text-[#535353] mb-4">Loading...</h1>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading checkout...</p>
         </div>
       </div>
     );
   }
 
-  if (state.items.length === 0 && !isPaymentSuccess) {
+  if (cartState.items.length === 0) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="font-anton text-4xl text-[#535353] mb-4">Your cart is empty</h1>
-          <Link
-            href="/"
-            className="inline-block bg-[#535353] text-white px-8 py-3 rounded-lg font-poppins font-semibold hover:bg-[#404040] transition-colors"
-          >
-            Continue Shopping
-          </Link>
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md">
+            <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">Your cart is empty</h2>
+            <p className="text-gray-600 mb-6">Add some books to your cart before checking out.</p>
+            <button
+              onClick={() => router.push('/books')}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Browse Books
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div 
-        className="h-[120px] flex items-center justify-between px-8 relative overflow-hidden"
-        style={{ backgroundImage: 'url(/images/about-book.svg)' }}
-      >
-        {/* Back to Shopping Button */}
-        <Link
-          href="/books"
-          className="bg-[#535353] text-white py-2 px-4 rounded-lg font-poppins font-semibold hover:bg-[#404040] transition-colors text-sm cursor-pointer z-10"
-        >
-          Back to Shopping
-        </Link>
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Checkout</h1>
+          <p className="text-gray-600">Complete your purchase securely with Stripe</p>
+        </div>
 
-        {/* Logo */}
-        <Image
-          src="/images/logo.png"
-          alt="Logo"
-          width={200}
-          height={100}
-          className="object-contain"
-        />
-
-        {/* Empty div for balance */}
-        <div className="w-32"></div>
-      </div>
-
-      {/* Progress Steps */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <ProgressIndicator currentStep={currentStep} />
-
-        {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Left Column - Step Content */}
-          <div className="lg:col-span-2">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentStep}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                style={{ pointerEvents: 'auto' }}
-              >
-                {renderStep()}
-              </motion.div>
-            </AnimatePresence>
+          {/* Order Summary */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
+              
+              <div className="space-y-4 mb-6">
+                {cartState.items.map((item) => (
+                  <div key={item.formatId} className="flex items-center space-x-3">
+                    <div className="flex-shrink-0">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        width={48}
+                        height={64}
+                        className="object-cover rounded"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {item.title}
+                      </p>
+                      <p className="text-sm text-gray-500">{item.format}</p>
+                      <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                    </div>
+                    <div className="text-sm font-medium text-gray-900">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-t pt-4 space-y-2">
+                {/* Subtotal */}
+                <div className="flex justify-between text-sm">
+                  <span>Subtotal</span>
+                  <span>${cartState.total.toFixed(2)}</span>
+                </div>
+                
+                {/* Delivery Fee */}
+                {checkoutState.deliveryMethod && checkoutState.deliveryPrice > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span>Delivery ({checkoutState.deliveryMethod})</span>
+                    <span>${checkoutState.deliveryPrice.toFixed(2)}</span>
+                  </div>
+                )}
+                
+                {/* Total */}
+                <div className="flex justify-between text-lg font-semibold border-t pt-2">
+                  <span>Total</span>
+                  <span>${(cartState.total + checkoutState.deliveryPrice).toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Right Column - Order Summary */}
-          <div className="lg:col-span-1">
-            <OrderSummary />
+          {/* Payment Form */}
+          <div className="lg:col-span-2">
+            {/* Delivery Method Selection */}
+            <DeliveryMethodSelector />
+            
+            <div className="bg-white rounded-lg shadow-sm border p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Information</h2>
+              <StripeEmbeddedCheckout
+                onSuccess={handleCheckoutSuccess}
+                onError={handleCheckoutError}
+              />
+            </div>
           </div>
         </div>
       </div>
