@@ -51,10 +51,10 @@ export default function HeroContent({ className = "" }: HeroContentProps) {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
         viewport={{ once: false }} // This makes it replay
-        className="relative z-10 w-[300px] h-[400px] sm:w-[400px] sm:h-[533px] md:w-[550px] md:h-[733px] lg:w-[650px] lg:h-[867px] xl:w-[950px] xl:h-[1200px] mt-4 sm:mt-6 md:mt-8 lg:mt-12 xl:mt-16"
+        className="relative z-10 w-[250px] h-[333px] sm:w-[350px] sm:h-[467px] md:w-[450px] md:h-[600px] lg:w-[550px] lg:h-[733px] xl:w-[750px] xl:h-[1000px] mt-4 sm:mt-6 md:mt-8 lg:mt-12 xl:mt-16"
       >
         <Image
-          src="/images/judy.png"
+          src="/images/judy1.png"
           alt="Portrait of Judy"
           fill
           className="object-contain"

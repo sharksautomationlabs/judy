@@ -75,13 +75,16 @@ export default function About() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
             viewport={{ once: false }}
           >
-            <Image
-              src="/images/about.png" // Ensure this path is correct
-              alt="Portrait of Judith Hobson"
-              width={600}
-              height={600}
-              className="object-cover w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[600px] lg:h-[600px]"
-            />
+            <div className="relative">
+              <div className="absolute inset-0 bg-[#575757] rounded-full w-[288px] h-[288px] sm:w-[352px] sm:h-[352px] md:w-[448px] md:h-[448px] lg:w-[576px] lg:h-[576px]"></div>
+              <Image
+                src="/images/judy.png" // Ensure this path is correct
+                alt="Portrait of Judith Hobson"
+                width={600}
+                height={600}
+                className="relative z-10 object-cover w-[288px] h-[288px] sm:w-[352px] sm:h-[352px] md:w-[448px] md:h-[448px] lg:w-[576px] lg:h-[576px] rounded-full"
+              />
+            </div>
           </motion.div>
         </div>
 
