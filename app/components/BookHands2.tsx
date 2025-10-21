@@ -19,10 +19,10 @@ export default function BookHands2({ className = "" }: BookHands2Props) {
     // The parent container remains the same, providing the positioning context
     <div className={`relative h-64 sm:h-80 lg:h-96 bg-white ${className}`}>
       
-        {/* Left Hand (Holding Book) - Moved even lower */}
+        {/* Left Hand (Holding Book) - Made bigger and moved more to the left */}
         <motion.div
           // Moved from -bottom-55 to -bottom-65 for lower positioning
-          className="absolute z-20 -bottom-65 left-0 w-[88px] h-[440px] sm:w-[440px] sm:h-[572px] md:w-[572px] md:h-[704px] lg:w-[704px] lg:h-[880px]"
+          className="absolute z-20 -bottom-55 -left-16 w-[100px] h-[480px] sm:w-[480px] sm:h-[620px] md:w-[620px] md:h-[750px] lg:w-[750px] lg:h-[920px]"
         initial={{ opacity: 0, x: -100 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 1, ease: 'easeOut' }}
@@ -45,7 +45,7 @@ export default function BookHands2({ className = "" }: BookHands2Props) {
         viewport={{ once: false }}
       >
         <Image
-          src="/images/hand right.png"
+          src="/images/hand right2.png"
           alt="Hand reaching for the book"
           fill
           className="object-contain drop-shadow-xl animate-book-hinge-right"
