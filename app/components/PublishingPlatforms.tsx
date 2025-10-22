@@ -73,6 +73,33 @@ export default function PublishingPlatforms({ className = "" }: PublishingPlatfo
               className="object-contain h-full w-auto"
             />
           </div>
+          <div className="flex items-center justify-center h-12 sm:h-16 mx-8">
+            <Image
+              src="/images/publishing-platforms/Booktopia-logo.png"
+              alt="Booktopia"
+              width={120}
+              height={60}
+              className="object-contain h-full w-auto"
+            />
+          </div>
+          <div className="flex items-center justify-center h-12 sm:h-16 mx-8">
+            <Image
+              src="/images/publishing-platforms/indigo-logo.png"
+              alt="Indigo"
+              width={120}
+              height={60}
+              className="object-contain h-full w-auto"
+            />
+          </div>
+          <div className="flex items-center justify-center h-10 sm:h-12 mx-8">
+            <Image
+              src="/images/publishing-platforms/Lulu-logo.png"
+              alt="Lulu"
+              width={100}
+              height={50}
+              className="object-contain h-full w-auto"
+            />
+          </div>
           {/* Duplicate for seamless loop */}
           <div className="flex items-center justify-center h-10 sm:h-12 mx-8">
             <Image
@@ -114,6 +141,33 @@ export default function PublishingPlatforms({ className = "" }: PublishingPlatfo
             <Image
               src="/images/publishing-platforms/kobo-logo.png"
               alt="Kobo"
+              width={100}
+              height={50}
+              className="object-contain h-full w-auto"
+            />
+          </div>
+          <div className="flex items-center justify-center h-12 sm:h-16 mx-8">
+            <Image
+              src="/images/publishing-platforms/Booktopia-logo.png"
+              alt="Booktopia"
+              width={120}
+              height={60}
+              className="object-contain h-full w-auto"
+            />
+          </div>
+          <div className="flex items-center justify-center h-12 sm:h-16 mx-8">
+            <Image
+              src="/images/publishing-platforms/indigo-logo.png"
+              alt="Indigo"
+              width={120}
+              height={60}
+              className="object-contain h-full w-auto"
+            />
+          </div>
+          <div className="flex items-center justify-center h-10 sm:h-12 mx-8">
+            <Image
+              src="/images/publishing-platforms/Lulu-logo.png"
+              alt="Lulu"
               width={100}
               height={50}
               className="object-contain h-full w-auto"

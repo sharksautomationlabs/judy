@@ -43,7 +43,7 @@ export default function AboutAbout() {
               </p>
               
               <p className="font-poppins text-sm sm:text-base text-gray-800 leading-relaxed">
-                Living in town has many advantages when you are raising children and working. You are close to all the stores and it&apos;s easy to go to the events in town. But for some, once the kids leave home and they are no longer working, a quieter life might be just the thing. That means moving outside of town. You get to experience a very different life. In most ways it works out well, but there is just one problem........
+                Judith has had a number of opportunities to do things she never expected. The last is writing books. Her brother had once asked her to write his story and she said no. After years of research, his story will be released next year. When she started researching, her goal was to get a hearing for him. Now her goal is to get a judge, prosecutor and detectives arrested, tried, convicted and sentenced to prison for all the illegal activity used to get an innocent man condemned to life without the possibility of parole. And he is just one of many.
               </p>
             </div>
           </motion.div>
