@@ -14,6 +14,8 @@ interface HeaderProps {
 export default function Header({ className = "" }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [adminPassword, setAdminPassword] = useState('');
   const { state, dispatch } = useCart();
   
   const navLinks = [
@@ -21,6 +23,7 @@ export default function Header({ className = "" }: HeaderProps) {
     { href: '/about', label: 'ABOUT THE AUTHOR' },
     { href: '/books', label: 'ALL BOOKS' },
     { href: '/contact', label: 'CONTACT US' },
+    { href: '/blog', label: 'BLOGS' }
   ];
 
   // Hydration check to prevent SSR/client mismatch
@@ -30,6 +33,19 @@ export default function Header({ className = "" }: HeaderProps) {
 
   const handleToggleCart = () => {
     dispatch({ type: 'TOGGLE_CART' });
+  };
+
+  const handleAdminLogin = () => {
+    if (adminPassword === 'judith2024') {
+      // Store admin status in localStorage
+      localStorage.setItem('isAdmin', 'true');
+      setShowAdminLogin(false);
+      setAdminPassword('');
+      // Redirect to blog page after successful login
+      window.location.href = '/blog';
+    } else {
+      alert('Incorrect password');
+    }
   };
 
   return (
@@ -57,11 +73,20 @@ export default function Header({ className = "" }: HeaderProps) {
         </ul>
 
         {/* Cart Icon */}
-        <button
-          onClick={handleToggleCart}
-          className="relative p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus-visible:outline-none focus:ring-0 focus:ring-offset-0"
-          aria-label="Toggle cart"
-        >
+        <div className="flex items-center space-x-1">
+          {/* Admin Login Button */}
+          <button
+            onClick={() => setShowAdminLogin(true)}
+            className="bg-[#575757] hover:bg-[#404040] text-white font-poppins font-medium py-2 px-4 rounded-full shadow-sm hover:shadow-md transition-all duration-300 text-sm cursor-pointer"
+          >
+            Admin
+          </button>
+          
+          <button
+            onClick={handleToggleCart}
+            className="relative p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus-visible:outline-none focus:ring-0 focus:ring-offset-0"
+            aria-label="Toggle cart"
+          >
           <svg
             className="w-6 h-6 text-black"
             fill="none"
@@ -97,6 +122,7 @@ export default function Header({ className = "" }: HeaderProps) {
             </span>
           )}
         </button>
+        </div>
 
         {/* Mobile Hamburger Menu */}
         <button
@@ -117,72 +143,106 @@ export default function Header({ className = "" }: HeaderProps) {
             )}
           </svg>
         </button>
-      </nav>
 
-      {/* Mobile Navigation Menu */}
-      {isMobileMenuOpen && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-          
-          {/* Menu Panel */}
-          <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ 
-              duration: 0.4, 
-              ease: [0.4, 0.0, 0.2, 1],
-              type: "spring",
-              stiffness: 300,
-              damping: 30
-            }}
-            className="md:hidden absolute top-full left-4 right-4 z-50 bg-[#E6E6E6] shadow-2xl border border-gray-300 rounded-2xl overflow-hidden"
-            style={{ 
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)'
-            }}
-          >
-            <div className="p-2">
-              <ul className="space-y-1">
-                {navLinks.map((link, index) => (
-                  <motion.li 
-                    key={link.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ 
-                      duration: 0.3, 
-                      delay: index * 0.1,
-                      ease: "easeOut"
-                    }}
-                  >
-                    <Link
-                      href={link.href}
-                      className="block px-6 py-4 text-lg font-semibold tracking-wider text-gray-800 hover:text-black hover:bg-gradient-to-r hover:from-gray-50 hover:to-white rounded-xl transition-all duration-300 group text-center focus:outline-none focus-visible:outline-none focus:ring-0 focus:ring-offset-0"
-                      onClick={() => setIsMobileMenuOpen(false)}
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            
+            {/* Menu Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ 
+                duration: 0.4, 
+                ease: [0.4, 0.0, 0.2, 1],
+                type: "spring",
+                stiffness: 300,
+                damping: 30
+              }}
+              className="md:hidden absolute top-full left-4 right-4 z-50 bg-[#E6E6E6] shadow-2xl border border-gray-300 rounded-2xl overflow-hidden"
+              style={{ 
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              <div className="p-2">
+                <ul className="space-y-1">
+                  {navLinks.map((link, index) => (
+                    <motion.li 
+                      key={link.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ 
+                        duration: 0.3, 
+                        delay: index * 0.1,
+                        ease: "easeOut"
+                      }}
                     >
-                      <span className="flex items-center justify-center">
-                        <span className="group-hover:translate-x-1 transition-transform duration-300">
-                          {link.label}
+                      <Link
+                        href={link.href}
+                        className="block px-6 py-4 text-lg font-semibold tracking-wider text-gray-800 hover:text-black hover:bg-gradient-to-r hover:from-gray-50 hover:to-white rounded-xl transition-all duration-300 group text-center focus:outline-none focus-visible:outline-none focus:ring-0 focus:ring-offset-0"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <span className="flex items-center justify-center">
+                          <span className="group-hover:translate-x-1 transition-transform duration-300">
+                            {link.label}
+                          </span>
                         </span>
-                      </span>
-                    </Link>
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-        </>
-      )}
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </nav>
 
       {/* Cart Side Panel */}
       <CartSidePanel />
+
+      {/* Admin Login Modal */}
+      {showAdminLogin && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full mx-4" style={{ fontFamily: 'var(--font-poppins)' }}>
+            <h3 className="text-lg font-semibold mb-4 font-poppins" style={{ fontFamily: 'var(--font-poppins)' }}>Admin Login</h3>
+            <input
+              type="password"
+              value={adminPassword}
+              onChange={(e) => setAdminPassword(e.target.value)}
+              placeholder="Enter admin password"
+              className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-2 focus:ring-gray-500 focus:border-transparent font-poppins"
+              onKeyPress={(e) => e.key === 'Enter' && handleAdminLogin()}
+            />
+            <div className="flex space-x-3">
+              <button
+                onClick={handleAdminLogin}
+                className="flex-1 bg-[#575757] hover:bg-[#404040] text-white py-2 px-4 rounded-lg transition-colors duration-300 font-poppins font-medium"
+              >
+                Login
+              </button>
+              <button
+                onClick={() => {
+                  setShowAdminLogin(false);
+                  setAdminPassword('');
+                }}
+                className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors duration-300 font-poppins font-medium"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

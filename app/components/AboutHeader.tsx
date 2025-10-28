@@ -17,6 +17,7 @@ export default function AboutHeader({ className = "" }: AboutHeaderProps) {
     { href: '/about', label: 'ABOUT THE AUTHOR' },
     { href: '/books', label: 'ALL BOOKS' },
     { href: '/contact', label: 'CONTACT US' },
+    { href: '/blog', label: 'BLOGS' }
   ];
 
   return (

@@ -78,6 +78,13 @@ export default function Navigation() {
               >
                 CONTACT US
               </Link>
+              <Link 
+                href="/blog" 
+                className="text-sm font-semibold uppercase tracking-[0.12em] text-[#333333] hover:text-black hover:-translate-y-0.5 transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-3"
+                style={{ fontFamily: "'Inter', system-ui" }}
+              >
+                BLOGS
+              </Link>
             </nav>
             
             {/* Mobile Hamburger Menu */}
@@ -142,6 +149,12 @@ export default function Navigation() {
               className="text-base font-semibold uppercase tracking-wider text-black py-2"
             >
               CONTACT US
+            </Link>
+            <Link 
+              href="/blog" 
+              className="text-base font-semibold uppercase tracking-wider text-black py-2"
+            >
+              BLOGS
             </Link>
           </nav>
         </div>
