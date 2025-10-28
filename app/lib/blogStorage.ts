@@ -20,7 +20,7 @@ export async function loadBlogPosts(): Promise<BlogPost[]> {
     await ensureDataDirectory();
     const data = await fs.readFile(DATA_FILE, 'utf-8');
     return JSON.parse(data);
-  } catch (error) {
+  } catch {
     console.log('No existing blog data found, using default data');
     return getDefaultBlogPosts();
   }

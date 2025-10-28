@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import Header from '../../components/Header';
 import Contact from '../../components/Contact';
 import { motion } from 'framer-motion';
@@ -72,9 +73,9 @@ export default function BlogPostPage() {
             >
               <h1 className="font-anton text-4xl font-bold text-gray-900 mb-4">Blog Post Not Found</h1>
               <p className="font-poppins text-xl text-gray-600 mb-8">
-                The blog post you're looking for doesn't exist or may have been removed.
+                The blog post you&apos;re looking for doesn&apos;t exist or may have been removed.
               </p>
-              <a
+              <Link
                 href="/blog"
                 className="inline-flex items-center px-8 py-4 bg-black text-white font-poppins font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300 text-lg"
               >
@@ -82,7 +83,7 @@ export default function BlogPostPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 Back to Blog
-              </a>
+              </Link>
             </motion.div>
           </div>
         </div>
@@ -163,7 +164,7 @@ export default function BlogPostPage() {
 
                 {/* Back to Blog */}
                 <div className="mt-12">
-                  <a
+                  <Link
                     href="/blog"
                     className="inline-flex items-center px-6 py-3 bg-black text-white font-poppins font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300"
                   >
@@ -171,7 +172,7 @@ export default function BlogPostPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     Back to Blog
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>
