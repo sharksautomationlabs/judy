@@ -11,6 +11,55 @@ export interface BlogPost {
   tags: string[];
 }
 
+// Utility function to strip HTML tags and get plain text
+function stripHTML(html: string): string {
+  if (!html) return '';
+  // Replace HTML entities
+  let text = html
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+  // Remove HTML tags
+  text = text.replace(/<[^>]*>/g, '');
+  // Replace multiple spaces with single space
+  text = text.replace(/\s+/g, ' ').trim();
+  return text;
+}
+
+// Utility function to extract first image from HTML content
+function extractFirstImage(html: string): string | undefined {
+  if (!html) return undefined;
+  
+  // Match img tags with src attribute
+  const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/i;
+  const match = html.match(imgRegex);
+  
+  if (match && match[1]) {
+    return match[1];
+  }
+  
+  return undefined;
+}
+
+// Utility function to remove first image from HTML content if it matches a given URL
+function removeFirstImageIfMatches(html: string, imageUrl: string): string {
+  if (!html || !imageUrl) return html;
+  
+  // Match the first img tag and check if src matches
+  const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/i;
+  const match = html.match(imgRegex);
+  
+  if (match && match[0] && match[1] === imageUrl) {
+    // Remove the first image tag
+    return html.replace(match[0], '').trim();
+  }
+  
+  return html;
+}
+
 // In-memory blog posts store (will be loaded from file)
 export let blogPosts: BlogPost[] = [];
 
@@ -51,15 +100,26 @@ async function ensureBlogPostsLoaded(): Promise<void> {
 export async function addBlogPost(post: Omit<BlogPost, 'id' | 'publishedAt' | 'updatedAt'>): Promise<BlogPost> {
   await ensureBlogPostsLoaded();
   
+  const plainTextContent = stripHTML(post.content);
+  // If no featured image is provided, extract first image from content
+  const extractedImage = extractFirstImage(post.content);
+  const featuredImage = post.featuredImage || extractedImage;
+  
+  // If featured image was automatically extracted from content (not manually set), remove it from content to avoid duplication
+  let finalContent = post.content;
+  if (featuredImage && !post.featuredImage && extractedImage === featuredImage) {
+    finalContent = removeFirstImageIfMatches(post.content, featuredImage);
+  }
+  
   const newPost: BlogPost = {
     id: Date.now().toString(),
     title: post.title,
-    content: post.content,
-    excerpt: post.excerpt || post.content.substring(0, 150) + '...',
+    content: finalContent,
+    excerpt: post.excerpt || plainTextContent.substring(0, 150) + (plainTextContent.length > 150 ? '...' : ''),
     author: post.author,
     publishedAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-    featuredImage: post.featuredImage || undefined,
+    featuredImage: featuredImage || undefined,
     tags: post.tags || []
   };
   
@@ -74,6 +134,25 @@ export async function updateBlogPost(id: string, updates: Partial<Omit<BlogPost,
   const postIndex = blogPosts.findIndex(p => p.id === id);
   if (postIndex === -1) {
     return null;
+  }
+
+  // If content is updated but excerpt is not provided, generate new excerpt
+  if (updates.content && !updates.excerpt) {
+    const plainTextContent = stripHTML(updates.content);
+    updates.excerpt = plainTextContent.substring(0, 150) + (plainTextContent.length > 150 ? '...' : '');
+  }
+
+  // If no featured image is provided (either in updates or existing post) and content has an image, extract first image from content
+  if (updates.content && !updates.featuredImage) {
+    // Only extract if there's no existing featured image OR if content was updated
+    if (!blogPosts[postIndex].featuredImage || updates.content !== blogPosts[postIndex].content) {
+      const firstImage = extractFirstImage(updates.content);
+      if (firstImage) {
+        updates.featuredImage = firstImage;
+        // Remove the first image from content if it's being used as featured image
+        updates.content = removeFirstImageIfMatches(updates.content, firstImage);
+      }
+    }
   }
 
   const updatedPost: BlogPost = {

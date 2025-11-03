@@ -96,8 +96,8 @@ export default function BlogPostPage() {
       <Header />
       <div className="pt-16 sm:pt-20 md:pt-24">
         {/* Blog Post Hero */}
-        <section className="bg-[#E6E6E6] py-16 sm:py-20 md:py-24">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+        <section className="bg-[#E6E6E6] py-16 sm:py-20 md:py-24 w-full">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -130,36 +130,35 @@ export default function BlogPostPage() {
         </section>
 
         {/* Blog Post Content */}
-        <section className="py-16 sm:py-20 md:py-24">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
+        <section className="py-16 sm:py-20 md:py-24 w-full">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start"
+              className="w-full"
             >
-              {/* Featured Image - Left Side */}
+              {/* Featured Image - Centered */}
               {blogPost.featuredImage && (
-                <div className="order-2 lg:order-1">
-                  <div className="sticky top-8">
-                    <img
-                      src={blogPost.featuredImage}
-                      alt={blogPost.title}
-                      className="w-full max-w-sm h-auto rounded-lg shadow-lg mx-auto lg:mx-0"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                    />
-                  </div>
+                <div className="w-full mb-8 flex justify-center">
+                  <img
+                    src={blogPost.featuredImage}
+                    alt={blogPost.title}
+                    className="max-w-full h-auto rounded-lg shadow-lg"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
                 </div>
               )}
 
-              {/* Blog Content - Right Side */}
-              <div className={`order-1 lg:order-2 ${blogPost.featuredImage ? 'lg:pl-8' : ''}`}>
-                <article className="prose prose-lg max-w-none">
-                  <div className="font-poppins text-gray-800 leading-relaxed whitespace-pre-wrap">
-                    {blogPost.content}
-                  </div>
+              {/* Blog Content - Full Width */}
+              <div className="w-full">
+                <article className="prose prose-lg max-w-none w-full">
+                  <div 
+                    className="font-poppins text-gray-800 leading-relaxed blog-content w-full"
+                    dangerouslySetInnerHTML={{ __html: blogPost.content }}
+                  />
                 </article>
 
                 {/* Back to Blog */}

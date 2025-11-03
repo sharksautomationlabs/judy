@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Contact from '../components/Contact';
+import RichTextEditor from '../components/RichTextEditor';
 import { motion } from 'framer-motion';
 import { BlogPost } from '../lib/blogData';
 
@@ -185,10 +186,10 @@ export default function BlogPage() {
       <div className="pt-16 sm:pt-20 md:pt-24">
         {/* Blog Hero */}
         <section 
-          className="bg-[#DCDCDC] py-16 sm:py-20 md:py-24 relative bg-cover bg-center overflow-hidden"
+          className="bg-[#DCDCDC] py-16 sm:py-20 md:py-24 relative bg-cover bg-center overflow-hidden w-full"
           style={{ backgroundImage: 'url(/images/about-book.svg)' }}
         >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -227,7 +228,7 @@ export default function BlogPage() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6"
+              className="bg-white rounded-lg w-full max-w-7xl max-h-[90vh] overflow-y-auto p-6"
             >
               <h2 className="font-anton text-2xl font-bold text-black uppercase mb-6">
                 {editingPost ? 'Edit Blog Post' : 'Create New Blog Post'}
@@ -264,12 +265,10 @@ export default function BlogPage() {
                   <label className="block font-poppins font-semibold text-gray-700 mb-2">
                     Content *
                   </label>
-                  <textarea
-                    value={formData.content}
-                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                    rows={10}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
-                    required
+                  <RichTextEditor
+                    content={formData.content}
+                    onChange={(content) => setFormData({ ...formData, content })}
+                    placeholder="Write your blog post content here..."
                   />
                 </div>
 
@@ -321,8 +320,8 @@ export default function BlogPage() {
         )}
 
         {/* Blog Posts */}
-        <section className="py-16 sm:py-20 md:py-24">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+        <section className="py-16 sm:py-20 md:py-24 w-full">
+          <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
             {blogPosts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {blogPosts.map((post, index) => (
