@@ -141,6 +141,7 @@ export async function addBlogPost(post: Omit<BlogPost, 'id' | 'publishedAt' | 'u
   };
   
   blogPosts.unshift(newPost);
+  // Save to storage (KV, file system, or in-memory fallback)
   await saveBlogPosts(blogPosts);
   return newPost;
 }
@@ -179,6 +180,7 @@ export async function updateBlogPost(id: string, updates: Partial<Omit<BlogPost,
   };
 
   blogPosts[postIndex] = updatedPost;
+  // Save to storage (KV, file system, or in-memory fallback)
   await saveBlogPosts(blogPosts);
   return updatedPost;
 }
@@ -192,6 +194,7 @@ export async function deleteBlogPost(id: string): Promise<boolean> {
   }
 
   blogPosts.splice(postIndex, 1);
+  // Save to storage (KV, file system, or in-memory fallback)
   await saveBlogPosts(blogPosts);
   return true;
 }
