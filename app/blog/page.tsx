@@ -101,12 +101,14 @@ export default function BlogPage() {
           setShowForm(false);
           alert('Blog post created successfully!');
         } else {
-          alert('Failed to create blog post. Please try again.');
+          const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+          alert(`Failed to create blog post: ${errorData.error || 'Please try again.'}`);
         }
       }
     } catch (error) {
       console.error('Error saving blog post:', error);
-      alert('An error occurred while saving the blog post. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+      alert(`Error: ${errorMessage}`);
     }
   };
 

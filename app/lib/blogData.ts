@@ -100,6 +100,23 @@ async function ensureBlogPostsLoaded(): Promise<void> {
 export async function addBlogPost(post: Omit<BlogPost, 'id' | 'publishedAt' | 'updatedAt'>): Promise<BlogPost> {
   await ensureBlogPostsLoaded();
   
+  // Validate required fields
+  if (!post.title || !post.title.trim()) {
+    throw new Error('Title is required');
+  }
+  if (!post.author || !post.author.trim()) {
+    throw new Error('Author is required');
+  }
+  if (!post.content || !post.content.trim()) {
+    throw new Error('Content is required');
+  }
+  
+  // Check if content is just empty HTML tags
+  const trimmedContent = post.content.trim();
+  if (trimmedContent === '<p></p>' || trimmedContent === '<p><br></p>' || trimmedContent === '<br>' || trimmedContent === '') {
+    throw new Error('Content is required. Please add some content to your blog post.');
+  }
+  
   const plainTextContent = stripHTML(post.content);
   // If no featured image is provided, extract first image from content
   const extractedImage = extractFirstImage(post.content);
@@ -113,10 +130,10 @@ export async function addBlogPost(post: Omit<BlogPost, 'id' | 'publishedAt' | 'u
   
   const newPost: BlogPost = {
     id: Date.now().toString(),
-    title: post.title,
+    title: post.title.trim(),
     content: finalContent,
     excerpt: post.excerpt || plainTextContent.substring(0, 150) + (plainTextContent.length > 150 ? '...' : ''),
-    author: post.author,
+    author: post.author.trim(),
     publishedAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     featuredImage: featuredImage || undefined,

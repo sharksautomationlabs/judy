@@ -58,25 +58,40 @@ export async function POST(request: NextRequest) {
     const { title, content, excerpt, author, featuredImage, tags } = body;
 
     // Basic validation
-    if (!title || !author || !content) {
-      return NextResponse.json({ error: 'Title, author, and content are required' }, { status: 400 });
+    if (!title || !title.trim()) {
+      return NextResponse.json({ error: 'Title is required' }, { status: 400 });
     }
-
+    if (!author || !author.trim()) {
+      return NextResponse.json({ error: 'Author is required' }, { status: 400 });
+    }
+    
+    // Validate content is not just empty HTML
+    const trimmedContent = content.trim();
+    if (!trimmedContent || trimmedContent === '<p></p>' || trimmedContent === '<p><br></p>' || trimmedContent === '<br>') {
+      return NextResponse.json({ 
+        error: 'Content is required. Please add some text or images to your blog post.' 
+      }, { status: 400 });
+    }
+    
     const plainTextContent = stripHTML(content);
     // If no featured image is provided, extract first image from content
     // Note: addBlogPost will handle removing the duplicate from content
     const newPost = await addBlogPost({
-      title,
-      content,
-      excerpt: excerpt || plainTextContent.substring(0, 150) + (plainTextContent.length > 150 ? '...' : ''),
-      author,
-      featuredImage: featuredImage || undefined,
+      title: title.trim(),
+      content: trimmedContent,
+      excerpt: excerpt ? excerpt.trim() : (plainTextContent.substring(0, 150) + (plainTextContent.length > 150 ? '...' : '')),
+      author: author.trim(),
+      featuredImage: featuredImage ? featuredImage.trim() : undefined,
       tags: tags || []
     });
 
     return NextResponse.json(newPost, { status: 201 });
   } catch (error) {
     console.error('Error creating blog post:', error);
-    return NextResponse.json({ error: 'Failed to create blog post' }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    return NextResponse.json({ 
+      error: 'Failed to create blog post',
+      details: errorMessage 
+    }, { status: 500 });
   }
 }
