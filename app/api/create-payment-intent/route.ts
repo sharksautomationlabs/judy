@@ -3,7 +3,7 @@ import { getStripe } from '../../lib/stripe';
 
 export async function POST(request: NextRequest) {
   try {
-    const stripe = getStripe();
+    const stripe = await getStripe();
     const { amount, currency = 'usd', metadata } = await request.json();
 
     if (!amount || amount <= 0) {

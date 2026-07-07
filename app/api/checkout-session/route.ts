@@ -3,7 +3,7 @@ import { getStripe } from '../../lib/stripe';
 
 export async function GET(request: NextRequest) {
   try {
-    const stripe = getStripe();
+    const stripe = await getStripe();
     const { searchParams } = new URL(request.url);
     const sessionId = searchParams.get('session_id');
 

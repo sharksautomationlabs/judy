@@ -4,7 +4,7 @@ import { getStripe } from '../../lib/stripe';
 export async function GET() {
   try {
     // Test Stripe connection by retrieving account information
-    const stripe = getStripe();
+    const stripe = await getStripe();
     const account = await stripe.accounts.retrieve();
     
     return NextResponse.json({ 

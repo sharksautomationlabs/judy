@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
       console.error('STRIPE_SECRET_KEY is not configured');
       return NextResponse.json({ error: 'Stripe is not configured' }, { status: 500 });
     }
-    const stripe = getStripe();
+    const stripe = await getStripe();
 
     const { items, customerEmail, deliveryMethod, deliveryPrice } = await request.json();
 

@@ -1,11 +1,12 @@
-import Stripe from 'stripe';
+import type Stripe from 'stripe';
 
-// Lazy-initialized Stripe client. Instantiating Stripe at module scope crashes
-// `next build` when STRIPE_SECRET_KEY is missing, so routes must call this
-// inside their handlers instead.
+// Lazy-initialized Stripe client. The 'stripe' package is dynamically imported
+// at request time only, so `next build` never touches it — the build can never
+// fail with "Neither apiKey nor config.authenticator provided" even when
+// STRIPE_SECRET_KEY is not configured.
 let stripeClient: Stripe | null = null;
 
-export function getStripe(): Stripe {
+export async function getStripe(): Promise<Stripe> {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) {
     throw new Error(
@@ -13,7 +14,8 @@ export function getStripe(): Stripe {
     );
   }
   if (!stripeClient) {
-    stripeClient = new Stripe(key, {
+    const { default: StripeCtor } = await import('stripe');
+    stripeClient = new StripeCtor(key, {
       apiVersion: '2025-09-30.clover',
     });
   }
