@@ -1,13 +1,10 @@
 import { NextResponse } from 'next/server';
-import Stripe from 'stripe';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-09-30.clover',
-});
+import { getStripe } from '../../lib/stripe';
 
 export async function GET() {
   try {
     // Test Stripe connection by retrieving account information
+    const stripe = getStripe();
     const account = await stripe.accounts.retrieve();
     
     return NextResponse.json({ 

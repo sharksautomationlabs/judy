@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-09-30.clover',
-});
+import { getStripe } from '../../lib/stripe';
 
 export async function POST(request: NextRequest) {
   try {
+    const stripe = getStripe();
     const { amount, currency = 'usd', metadata } = await request.json();
 
     if (!amount || amount <= 0) {
